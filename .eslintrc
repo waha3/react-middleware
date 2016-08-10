@@ -125,7 +125,7 @@
       2, "single", "avoid-escape"    // http://eslint.org/docs/rules/quotes
     ],
     "camelcase": [2, {               // http://eslint.org/docs/rules/camelcase
-      "properties": "never"
+      "properties": "always"
     }],
     "comma-spacing": [2, {           // http://eslint.org/docs/rules/comma-spacing
       "before": false,
@@ -157,7 +157,6 @@
       "before": false,
       "after": true
     }],
-    "keyword-spacing": 2,       // http://eslint.org/docs/rules/space-after-keywords
     // React
     "jsx-quotes": [2, "prefer-double"],
     "react/display-name": 0,
