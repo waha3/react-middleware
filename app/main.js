@@ -1,18 +1,30 @@
 
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import { store, INCREMENT, DECREMENT } from './components/App.js';
 
 class Root extends Component {
   render() {
     return (
-      <div>hello world</div>
+      <div>
+        <div>add {store.getState()}</div>
+        <button onClick={() => store.dispatch(INCREMENT)}>+</button>
+        <button onClick={() => store.dispatch(DECREMENT)}>-</button>
+      </div>
     );
   }
 }
 
 const rootElement = document.getElementById('root');
 
-render(
-  <Root />,
-  rootElement
-);
+
+function renderCom() {
+  render(
+    <Root />,
+    rootElement
+  );
+}
+
+renderCom();
+
+store.subscribe(renderCom);
