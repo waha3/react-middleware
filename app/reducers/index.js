@@ -1,48 +1,56 @@
-import { combineReducer } from 'redux';
-import { ADDTO, COMPLETEDTODO,  STATUS } from '../actions/index.js';
+import { combineReducers } from 'redux';
+import { REQUEST_POST, RECEIEVE_POST, REFLASH, SELECT_CONTENT } from '../actions/index.js';
 
-function todoList(state = [], action) {
+function selectedContent(state = 'nodejs', action) {
+  if(action.type === SELECT_CONTENT) {
+    return action.content;
+  } else {
+    return state;
+  }
+}
+
+
+function posts(state = {
+  isFetching: false,
+  isExpire: false,
+  items: []
+}, action) {
+  if(action.type === REFLASH) {
+    return Object.assign({}, state, {
+      isExpire: true
+    });
+  } else if (action.type === REQUEST_POST) {
+    return Object.assign({}, state, {
+      isFetching: true,
+      isExpire: false
+    });
+  } else if (action.type === RECEIEVE_POST) {
+    return Object.assign({}, state, {
+      isFetching: false,
+      isExpire: false,
+      lastUpdate: action.receiveAt,
+      items: action.posts
+    });
+  }
+}
+
+function postsBySelected(state = {}, action) {
   switch (action.type) {
-    case ADDTO:
-      return [
-        ...state,
-        {
-          text: action.text,
-          completed: false
-        }
-      ];
-    case COMPLETEDTODO:
-      return [
-        ...state.slice(0, action.index),
-        ...state.slice(action.index + 1, -action.index)
-      ];
+    case RECEIEVE_POST:
+    case REFLASH:
+    case RECEIEVE_POST:
+      return Object.assign({}, state, {
+        [action.content]: posts(state[content], action)
+      });
     default:
       return state;
   }
 }
 
-function filterStatus(state = { filter: '所有任务' }, action) {
-  switch (action.filter) {
-    case STATUS.all:
-      return {
-        filter: '所有任务'
-      };
-    case STATUS.completed:
-      return {
-        filter: '已完成的任务'
-      };
-    case STATUS.active:
-      return {
-        filter: '没有完成的任务'
-      };
-    default:
-      return state;
-  }
-}
 
-const todoApp = combineReducer({
-  todoList,
-  filterStatus
+const stateReducer = combineReducers({
+  selectedContent,
+  postsBySelected
 });
 
-export default todoApp;
+export default stateReducer;
