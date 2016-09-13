@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Selector from '../components/selector.js';
 import Posts from '../components/posts.js';
 import { fetchPostIfNeed } from '../actions/index.js';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 class App extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ class App extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(fetchPostIfNeed(content));
+    dispatch(fetchPostIfNeed());
   }
 
   render() {
@@ -28,4 +28,12 @@ App.propTypes = {
   dispatch: PropTypes.func.isRequired
 };
 
-export default App;
+
+function select(state) {
+  return {
+    selectTitle: state.selectTitle,
+    titleLists: state.titleLists
+  };
+}
+
+export default connect(select)(App);

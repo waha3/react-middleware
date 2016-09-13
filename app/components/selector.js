@@ -5,7 +5,8 @@ class Selector extends Component {
     return (
       <div className="selector">
         <select>
-          <option value="">111</option>
+          <option value="">react</option>
+          <option value="">frontend</option>
         </select>
       </div>
     );

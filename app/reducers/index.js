@@ -1,3 +1,15 @@
+// const state = {
+//   selectTitle: 'xxx',
+//   titleLists: {
+//     'xxx': {
+//       isFetching: false,
+//       isExpire: false,
+//       items: [],
+//       lastUpdate: ''
+//     }
+//   }
+// };
+
 import { combineReducers } from 'redux';
 import { REQUEST_POST, RECEIEVE_POST, REFLASH, SELECT_CONTENT } from '../actions/index.js';
 
@@ -48,9 +60,9 @@ function postsBySelected(state = {}, action) {
 }
 
 
-const stateReducer = combineReducers({
+const rootReducer = combineReducers({
   selectedContent,
   postsBySelected
 });
 
-export default stateReducer;
+export default rootReducer;

@@ -33,12 +33,12 @@ function receievePost(content, json) {
   };
 }
 
-function fetchPost(content) {
+export function fetchPost(content) {
   return dispatch => {
     dispatch(requestPost(content));
     return fetch(`http://www.subreddit.com/r/${content}.json`)
       .then(res => res.json())
-      .then(json => dispatch(receievePost(json)));
+      .then(json => dispatch(receievePost(content, json)));
   };
 }
 

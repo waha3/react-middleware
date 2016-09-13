@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import storeFactory from './store/index.js';
 import App from './container/App.js';
 
-const store = storeFactory();
+const store = storeFactory(window.devToolsExtension ? window.devToolsExtension() : f => f);
 
 class Root extends Component {
   render() {
