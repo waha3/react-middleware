@@ -1,38 +1,66 @@
 import React, { Component, PropTypes } from 'react';
 import Selector from '../components/selector.js';
 import Posts from '../components/posts.js';
-import { fetchPostIfNeed } from '../actions/index.js';
+import { fetchPostIfNeed, selectContent } from '../actions/index.js';
 import { connect } from 'react-redux';
 
 class App extends Component {
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    selectedContent: PropTypes.string.isRequired,
+    posts: PropTypes.array.isRequired
+  }
+
   constructor(props) {
     super(props);
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(fetchPostIfNeed());
+    const { dispatch, selectedContent } = this.props;
+    dispatch(fetchPostIfNeed(selectedContent));
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    // if (nextProps.selectedContent !== this.props.selectedContent) {
+    //   const { dispatch, selectedContent } = nextProps;
+    //   dispatch(fetchPostIfNeed(selectedContent));
+    // }
   }
 
   render() {
+    const { posts, dispatch } = this.props;
     return (
       <div className="container">
-        <Selector />
-        <Posts />
+        <Selector
+          onHandleChange={(val) => dispatch(selectContent(val))}
+          options={['nodejs', 'reactjs']}
+        />
+        <Posts
+          items={posts}
+        />
       </div>
     );
   }
 }
 
-App.propTypes = {
-  dispatch: PropTypes.func.isRequired
-};
-
-
 function select(state) {
+  const { selectedContent, postsBySelected } = state;
+  const {
+    isFetching,
+    items: posts,
+    lastUpdate,
+    isExpire
+  } = postsBySelected[selectedContent] || {
+    isFetching: true,
+    items: []
+  };
   return {
-    selectTitle: state.selectTitle,
-    titleLists: state.titleLists
+    selectedContent,
+    posts,
+    isFetching,
+    isExpire,
+    lastUpdate
   };
 }
 

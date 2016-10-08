@@ -1,12 +1,25 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 class Selector extends Component {
+  static propTypes = {
+    options: PropTypes.array.isRequired,
+    onHandleChange: PropTypes.func.isRequired
+  }
+
+  handleChange(val) {
+    this.props.onHandleChange(val);
+  }
+
   render() {
+    const { options } = this.props;
     return (
       <div className="selector">
-        <select>
-          <option value="">react</option>
-          <option value="">frontend</option>
+        <select onChange={e => this.handleChange(e.target.value)}>
+        {
+          options.map((v, i) =>
+            <option key={i} value={v}>{v}</option>
+          )
+        }
         </select>
       </div>
     );

@@ -1,6 +1,6 @@
 // const state = {
-//   selectTitle: 'xxx',
-//   titleLists: {
+//   selectContent: 'xxx',
+//   postsBySelected: {
 //     'xxx': {
 //       isFetching: false,
 //       isExpire: false,
@@ -11,7 +11,7 @@
 // };
 
 import { combineReducers } from 'redux';
-import { REQUEST_POST, RECEIEVE_POST, REFLASH, SELECT_CONTENT } from '../actions/index.js';
+import { REQUEST_POST, RECEIEVE_POST, REFRESH, SELECT_CONTENT } from '../actions/index.js';
 
 function selectedContent(state = 'nodejs', action) {
   if(action.type === SELECT_CONTENT) {
@@ -27,7 +27,7 @@ function posts(state = {
   isExpire: false,
   items: []
 }, action) {
-  if(action.type === REFLASH) {
+  if(action.type === REFRESH) {
     return Object.assign({}, state, {
       isExpire: true
     });
@@ -49,10 +49,10 @@ function posts(state = {
 function postsBySelected(state = {}, action) {
   switch (action.type) {
     case RECEIEVE_POST:
-    case REFLASH:
+    case REFRESH:
     case RECEIEVE_POST:
       return Object.assign({}, state, {
-        [action.content]: posts(state[content], action)
+        [action.content]: posts(state[action.content], action)
       });
     default:
       return state;

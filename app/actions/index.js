@@ -1,7 +1,7 @@
 export const REQUEST_POST = 'REQUEST_POST';
 export const RECEIEVE_POST = 'RECEIEVE_POST';
 export const SELECT_CONTENT = 'SELECT_CONTENT';
-export const REFLASH = 'REFLASH';
+export const REFRESH = 'REFRESH';
 
 export function selectContent(content) {
   return {
@@ -10,9 +10,9 @@ export function selectContent(content) {
   };
 }
 
-export function reflash(content) {
+export function refresh(content) {
   return {
-    type: REFLASH,
+    type: REFRESH,
     content
   };
 }
@@ -43,7 +43,7 @@ export function fetchPost(content) {
 }
 
 function shouldFetchPost(state, content) {
-  const isHasContent = state.titleLists[content];
+  const isHasContent = state.postsBySelected[content];
   if(!isHasContent) {
     return true;
   } else if(isHasContent.isFetching) {
