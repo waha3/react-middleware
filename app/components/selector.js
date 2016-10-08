@@ -3,11 +3,16 @@ import React, { Component, PropTypes } from 'react';
 class Selector extends Component {
   static propTypes = {
     options: PropTypes.array.isRequired,
-    onHandleChange: PropTypes.func.isRequired
+    onHandleChange: PropTypes.func.isRequired,
+    onHandleClick: PropTypes.func.isRequired
   }
 
   handleChange(val) {
     this.props.onHandleChange(val);
+  }
+
+  handleClick() {
+    this.props.onHandleClick();
   }
 
   render() {
@@ -21,6 +26,7 @@ class Selector extends Component {
           )
         }
         </select>
+        <button onClick={() => this.handleClick()}>刷新</button>
       </div>
     );
   }

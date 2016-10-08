@@ -3,14 +3,10 @@ import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import rootReducer from '../reducers/index.js';
 
-// saga
-// import createSagaMiddleware from 'redux-saga';
-// import sagas from '../midddleware/sagas.js';
-
 const midddleware = [ thunk ];
 
 const loggerMiddleware = createLogger();
-// midddleware.push(loggerMiddleware);
+midddleware.push(loggerMiddleware);
 
 const store = createStore(
   rootReducer,
@@ -18,13 +14,8 @@ const store = createStore(
   applyMiddleware(...midddleware)
 );
 
-// const createStoreWithMiddleware = applyMiddleware(
-//   thunkMiddleware,
-//   loggerMiddleware
-// )(createStore);
-
-// export default function storeFactory(initState) {
-//   return createStoreWithMiddleware(rootReducer, initState);
-// }
+// saga
+// import createSagaMiddleware from 'redux-saga';
+// import sagas from '../midddleware/sagas.js';
 
 export default store;

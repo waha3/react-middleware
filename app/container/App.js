@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Selector from '../components/selector.js';
 import Posts from '../components/posts.js';
-import { fetchPostIfNeed, selectContent } from '../actions/index.js';
+import { fetchPostIfNeed, selectContent, refresh } from '../actions/index.js';
 import { connect } from 'react-redux';
 
 class App extends Component {
@@ -21,19 +21,19 @@ class App extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-    // if (nextProps.selectedContent !== this.props.selectedContent) {
-    //   const { dispatch, selectedContent } = nextProps;
-    //   dispatch(fetchPostIfNeed(selectedContent));
-    // }
+    if (nextProps.selectedContent !== this.props.selectedContent) {
+      const { dispatch, selectedContent } = nextProps;
+      dispatch(fetchPostIfNeed(selectedContent));
+    }
   }
 
   render() {
-    const { posts, dispatch } = this.props;
+    const { posts, dispatch, selectedContent } = this.props;
     return (
       <div className="container">
         <Selector
-          onHandleChange={(val) => dispatch(selectContent(val))}
+          onHandleClick={() => dispatch(refresh(selectedContent))}
+          onHandleChange={val => dispatch(selectContent(val))}
           options={['nodejs', 'reactjs']}
         />
         <Posts
