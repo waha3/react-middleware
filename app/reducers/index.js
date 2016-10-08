@@ -48,7 +48,7 @@ function posts(state = {
 
 function postsBySelected(state = {}, action) {
   switch (action.type) {
-    case RECEIEVE_POST:
+    case REQUEST_POST:
     case REFRESH:
     case RECEIEVE_POST:
       return Object.assign({}, state, {

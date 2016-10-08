@@ -27,12 +27,18 @@ class App extends Component {
     }
   }
 
+  handleClick() {
+    const { dispatch, selectedContent } = this.props;
+    dispatch(refresh(selectedContent));
+    dispatch(fetchPostIfNeed(selectedContent));
+  }
+
   render() {
-    const { posts, dispatch, selectedContent } = this.props;
+    const { posts, dispatch } = this.props;
     return (
       <div className="container">
         <Selector
-          onHandleClick={() => dispatch(refresh(selectedContent))}
+          onHandleClick={() => this.handleClick()}
           onHandleChange={val => dispatch(selectContent(val))}
           options={['nodejs', 'reactjs']}
         />
